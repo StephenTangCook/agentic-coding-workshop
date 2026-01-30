@@ -13,6 +13,7 @@ interface Category {
   emoji: string;
   weight: number;
   score: number;
+  description: string;
 }
 
 interface User {
@@ -284,7 +285,7 @@ function ResultsView({
                 </span>
                 <span className="font-display font-bold text-purple-600">{category.score}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden mb-2">
                 <div
                   className="h-full bg-gradient-to-r from-pink-400 to-purple-500 rounded-full animate-fill-bar"
                   style={{
@@ -293,6 +294,9 @@ function ResultsView({
                   }}
                 />
               </div>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                {category.description}
+              </p>
             </CardContent>
           </Card>
         ))}

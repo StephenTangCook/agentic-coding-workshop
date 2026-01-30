@@ -197,36 +197,64 @@ export async function POST(request: Request) {
     const hours1 = getCodingHours(user1Data.events);
     const hours2 = getCodingHours(user2Data.events);
 
+    // Calculate shared data for descriptions
+    const sharedLangs = [...langs1].filter((l) => langs2.has(l));
+    const allLangs = new Set([...langs1, ...langs2]);
+    const uniqueLangs1 = [...langs1].filter((l) => !langs2.has(l));
+    const uniqueLangs2 = [...langs2].filter((l) => !langs1.has(l));
+    
+    const starred1Set = new Set(user1Data.starred.map((r) => r.full_name));
+    const starred2Set = new Set(user2Data.starred.map((r) => r.full_name));
+    const sharedStarred = [...starred1Set].filter((r) => starred2Set.has(r));
+    
+    const pushes1 = user1Data.events.filter((e) => e.type === "PushEvent").length;
+    const pushes2 = user2Data.events.filter((e) => e.type === "PushEvent").length;
+
     const categories = [
       {
         name: "Language Chemistry",
         emoji: "🧪",
         weight: 0.25,
         score: Math.round(languageChemistry(langs1, langs2)),
+        description: sharedLangs.length > 0
+          ? `You share ${sharedLangs.length} language${sharedLangs.length > 1 ? "s" : ""}: ${sharedLangs.join(", ")}`
+          : allLangs.size > 0
+            ? `No shared languages yet — but ${allLangs.size} combined to learn from each other!`
+            : "No public repos with languages detected",
       },
       {
         name: "Schedule Sync",
         emoji: "🕐",
         weight: 0.2,
         score: Math.round(scheduleSync(hours1, hours2)),
+        description: "Based on overlapping active coding hours from recent public events",
       },
       {
         name: "Star-Crossed Repos",
         emoji: "⭐",
         weight: 0.25,
         score: Math.round(starCrossedRepos(user1Data.starred, user2Data.starred)),
+        description: sharedStarred.length > 0
+          ? `${sharedStarred.length} shared starred repo${sharedStarred.length > 1 ? "s" : ""}: ${sharedStarred.map(r => r.split("/")[1]).join(", ")}`
+          : "No shared starred repos — discover new projects together!",
       },
       {
         name: "Commit Frequency",
         emoji: "📊",
         weight: 0.15,
         score: Math.round(commitFrequencyHarmony(user1Data.events, user2Data.events)),
+        description: pushes1 > 0 || pushes2 > 0
+          ? `Recent pushes: ${pushes1} vs ${pushes2} — ${Math.abs(pushes1 - pushes2) <= 5 ? "well matched!" : "different paces, but variety is good!"}`
+          : "No recent push activity detected",
       },
       {
         name: "Complementary Skills",
         emoji: "🧩",
         weight: 0.15,
         score: Math.round(complementarySkills(langs1, langs2)),
+        description: uniqueLangs1.length > 0 || uniqueLangs2.length > 0
+          ? `Unique skills to share: ${[...uniqueLangs1, ...uniqueLangs2].join(", ")}`
+          : "You have the same skill set — great minds think alike!",
       },
     ];
 
