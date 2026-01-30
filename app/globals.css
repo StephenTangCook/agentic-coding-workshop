@@ -17,11 +17,223 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Display font for headings - friendly, rounded style */
+.font-display {
+  font-family: var(--font-quicksand), var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Mono font for code/usernames */
+.font-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Compatibility Page Animations */
+
+/* Hearts floating upward in background */
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-float-up {
+  animation: float-up 10s ease-in-out infinite;
+}
+
+/* Heartbeat pulsing effect */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.15);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Delayed heartbeat for secondary elements */
+@keyframes heartbeat-delayed {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.15);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.animate-heartbeat-delayed {
+  animation: heartbeat-delayed 1.5s ease-in-out infinite;
+  animation-delay: 0.75s;
+}
+
+/* Gentle bounce for heart divider */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+/* Avatar slide-in from left */
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out forwards;
+}
+
+/* Avatar slide-in from right */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+/* Results container entrance */
+@keyframes slide-up {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+/* Score card pop-in */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+/* Staggered category cards */
+@keyframes fade-in-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+/* Progress bar fill animation */
+@keyframes fill-bar {
+  0% {
+    width: 0%;
+  }
+}
+
+.animate-fill-bar {
+  animation: fill-bar 1s ease-out forwards;
+}
+
+/* Bouncing dots for loading indicator */
+@keyframes bounce-dot {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-bounce-dot-1 {
+  animation: bounce-dot 0.6s ease-in-out infinite;
+}
+
+.animate-bounce-dot-2 {
+  animation: bounce-dot 0.6s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+.animate-bounce-dot-3 {
+  animation: bounce-dot 0.6s ease-in-out infinite;
+  animation-delay: 0.3s;
 }
